@@ -1,3 +1,7 @@
+import org.gradle.kotlin.dsl.apply
+import java.util.Properties
+import kotlin.apply
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,6 +12,17 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+val localProps = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) load(file.inputStream())
+}
+
+// Sanitizar las comillas y espacios
+val tmdbApiKeyRaw = localProps.getProperty("TMDB_API_KEY") ?: ""
+val tmdbApiKey = tmdbApiKeyRaw.trim().replace("\"", "")
+
+val tmdbBaseUrlRaw = localProps.getProperty("TMDB_BASE_URL") ?: "https://api.themoviedb.org/3/"
+val tmdbBaseUrl = tmdbBaseUrlRaw.trim().replace("\"", "")
 android {
     namespace = "com.example.popular_movies_apps"
     compileSdk = 36
@@ -17,8 +32,10 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        android.buildFeatures.buildConfig = true
+        buildConfigField("String", "TMDB_API_KEY", "\"$tmdbApiKey\"")
+        buildConfigField("String", "TMDB_BASE_URL", "\"$tmdbBaseUrl\"")
     }
 
     buildTypes {
@@ -76,4 +93,6 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
 
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    debugImplementation("com.squareup.okhttp3:logging-interceptor:4.11.0") // solo debug
 }
