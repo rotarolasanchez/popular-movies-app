@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "261423128510",
+    "project_id": "popular-movies-app-bdd6e",
+    "storage_bucket": "popular-movies-app-bdd6e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261423128510:android:882e5a1fd037f1024263ef",
+        "android_client_info": {
+          "package_name": "com.example.popular_movies_apps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg5pox4MfselvAaRfJwc9P_jXPOqqhG9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

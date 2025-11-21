@@ -9,50 +9,108 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
+import androidx.core.view.WindowCompat
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+//private val DarkColorScheme = darkColorScheme(
+    // Principales
+    primary = NetflixRed,
+    onPrimary = NetflixWhite,
+    primaryContainer = NetflixDarkRed,
+    onPrimaryContainer = NetflixWhite,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    // Secundarios
+    secondary = NetflixGray,
+    onSecondary = NetflixWhite,
+    secondaryContainer = NetflixDarkGray,
+    onSecondaryContainer = NetflixLightGray,
+
+    // Terciarios
+    tertiary = NetflixDarkRed,
+    onTertiary = NetflixWhite,
+    tertiaryContainer = NetflixCharcoal,
+    onTertiaryContainer = NetflixWhite,
+
+    // Fondos y superficies
+    background = NetflixBlack,
+    onBackground = NetflixWhite,
+    surface = NetflixDarkGray,
+    onSurface = NetflixWhite,
+    surfaceVariant = NetflixCharcoal,
+    onSurfaceVariant = NetflixDarkGray,
+
+    // Errores
+    error = NetflixRed,
+    onError = NetflixWhite,
+    errorContainer = NetflixCharcoal,
+    onErrorContainer = NetflixRed,
+
+    // Contornos
+    outline = NetflixDimGray,
+    outlineVariant = NetflixCharcoal
+)
+private val DarkColorScheme = darkColorScheme(
+//private val LightColorScheme = lightColorScheme(
+    // Principales
+    primary = NetflixLightRed,
+    onPrimary = NetflixWhite,
+    primaryContainer = NetflixPearlGray,
+    onPrimaryContainer = NetflixBlackText,
+
+    // Secundarios
+    secondary = NetflixSteelBlue,
+    onSecondary = NetflixWhite,
+    secondaryContainer = NetflixStone,
+    onSecondaryContainer = NetflixBlackText,
+
+    // Terciarios
+    tertiary = NetflixBurgundyRed,
+    onTertiary = NetflixWhite,
+    tertiaryContainer = NetflixPearlGray,
+    onTertiaryContainer = NetflixBurgundyRed,
+
+    // Fondos y superficies
+    background = NetflixLightBg,
+    onBackground = NetflixBlackText,
+    surface = NetflixPearlGray,
+    onSurface = NetflixBlackText,
+    surfaceVariant = NetflixStone,
+    onSurfaceVariant = NetflixDarkGrayText,
+
+    // Errores
+    error = NetflixBurgundyRed,
+    onError = NetflixWhite,
+    errorContainer = NetflixPearlGray,
+    onErrorContainer = NetflixBurgundyRed,
+
+    // Contornos
+    outline = NetflixDarkGrayText,
+    outlineVariant = NetflixStone
 )
 
 @Composable
 fun PopularmoviesappsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+
+    MaterialTheme(colorScheme = colorScheme, typography = Typography) {
+        // System bars
+        val context = LocalContext.current
+        if (context is Activity) {
+            SideEffect {
+                val window = context.window
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+                window.statusBarColor = colorScheme.background.toArgb()
+                window.navigationBarColor = colorScheme.background.toArgb()
+                WindowCompat.getInsetsController(window, window.decorView)
+                    .isAppearanceLightStatusBars = !darkTheme
+            }
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        content()
     }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
 }

@@ -9,14 +9,14 @@ import javax.inject.Inject
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.popular_movies_apps.domain.usecase.GetPopularMoviesUseCase
-import com.example.popular_movies_apps.presentation.state.MovieListUiState.MoviesListUiState
+import com.example.popular_movies_apps.presentation.state.MovieListUiState.MovieListUiState
 
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(MoviesListUiState())
+    var uiState by mutableStateOf(MovieListUiState.MoviesListUiState())
         private set
 
     init {
@@ -37,5 +37,4 @@ class MoviesListViewModel @Inject constructor(
             )
         }
     }
-
 }

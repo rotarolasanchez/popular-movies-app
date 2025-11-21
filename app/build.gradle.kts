@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     id("io.realm.kotlin") version libs.versions.realm.get()
     alias(libs.plugins.ksp)
-
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -70,6 +70,10 @@ dependencies {
     //implementation("io.realm.kotlin:library-base:1.11.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
 
+    implementation(libs.androidx.navigation.compose)
 
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
 }

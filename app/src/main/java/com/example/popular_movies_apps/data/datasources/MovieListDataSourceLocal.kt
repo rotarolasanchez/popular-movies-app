@@ -1,5 +1,6 @@
 package com.example.popular_movies_apps.data.datasources
 
+import com.example.popular_movies_apps.data.local.MovieEntity.MovieDetailRealmObject
 import com.example.popular_movies_apps.data.local.MovieEntity.MovieLocalDataSource
 import com.example.popular_movies_apps.data.local.MovieEntity.MovieRealmObject
 import io.realm.kotlin.Realm
@@ -13,12 +14,11 @@ import kotlin.collections.forEach
 class MovieListDataSourceLocal @Inject constructor() : MovieLocalDataSource {
 
     private val realm: Realm by lazy {
-        val config = RealmConfiguration.Builder(schema = setOf(MovieRealmObject::class))
-            .name("movies.realm")
-            .build()
+        val config = RealmConfiguration.Builder(
+            schema = setOf(MovieRealmObject::class, MovieDetailRealmObject::class)
+        ).name("movies.realm").build()
         Realm.open(config)
     }
-
     override fun getAllMovies(): List<MovieRealmObject> {
         return realm.query<MovieRealmObject>().find().toList()
     }
@@ -34,6 +34,16 @@ class MovieListDataSourceLocal @Inject constructor() : MovieLocalDataSource {
             movies.forEach { movie ->
                 copyToRealm(movie)
             }
+        }
+    }
+
+    override fun getMovieDetailById(id: Int): MovieDetailRealmObject? =
+        realm.query<MovieDetailRealmObject>("id == $0", id).first().find()
+
+    override fun saveMovieDetail(detail: MovieDetailRealmObject) {
+        realm.writeBlocking {
+            delete(query<MovieDetailRealmObject>("id == $0", detail.id))
+            copyToRealm(detail)
         }
     }
 }

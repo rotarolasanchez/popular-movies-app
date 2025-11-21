@@ -5,31 +5,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.popular_movies_app.presentation.state.MovieListUiState.MovieDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.popular_movies_apps.domain.model.MovieDetail
 import com.example.popular_movies_apps.domain.model.MovieModel
 import com.example.popular_movies_apps.domain.usecase.GetMovieDetailUseCase
+import com.example.popular_movies_apps.presentation.state.MovieListUiState.MovieListUiState
+import com.google.firebase.analytics.FirebaseAnalytics
 
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val getMovieDetail: GetMovieDetailUseCase,
-    //private val analytics: FirebaseAnalytics,
+    private val analytics: FirebaseAnalytics,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val movieId: Int = checkNotNull(savedStateHandle["movieId"])
 
-    var uiState by mutableStateOf(MovieDetailUiState())
+    var uiState by mutableStateOf(MovieListUiState.MovieDetailUiState())
         private set
 
     init {
-        //loadMovieDetail()
+        loadMovieDetail()
     }
-/*
+
     private fun loadMovieDetail() {
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true, error = null)
@@ -44,13 +46,13 @@ class MovieDetailViewModel @Inject constructor(
                 }
             )
         }
-    }*/
+    }
 
-    private fun logViewMovieDetail(movieModel: MovieModel) {
+    private fun logViewMovieDetail(movieDetail: MovieDetail) {
         val bundle = Bundle().apply {
-            putInt("movie_id", movieModel.id)
-            putString("movie_title", movieModel.title)
+            putInt("movie_id", movieDetail.id)
+            putString("movie_title", movieDetail.title)
         }
-        //analytics.logEvent("view_movie_detail", bundle)
+        analytics.logEvent("view_movie_detail", bundle)
     }
 }

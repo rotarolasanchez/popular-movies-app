@@ -25,6 +25,21 @@ fun MovieRealmObject.toDomain(): MovieModel = MovieModel(
     voteAverage = voteAverage
 )
 
+
+
+fun MovieDetailRealmObject.toDomain() = MovieDetail(
+    id = id,
+    title = title,
+    overview = overview,
+    posterUrl = posterPath?.let { "https://image.tmdb.org/t/p/w500$it" },
+    backdropUrl = backdropPath?.let { "https://image.tmdb.org/t/p/w780$it" },
+    releaseDate = releaseDate,
+    voteAverage = voteAverage,
+    genres = emptyList(), // No guardado actualmente
+    runtime = runtime,
+    tagline = tagline
+)
+
 fun MovieDetailDto.toDomain() = MovieDetail(
     id = id,
     title = title,
@@ -48,22 +63,6 @@ fun MovieDetailDto.toRealm() = MovieDetailRealmObject().apply {
     voteAverage = this@toRealm.voteAverage
     runtime = this@toRealm.runtime
     tagline = this@toRealm.tagline
-
-    //genres.clear()
-    //genres.addAll(this@toRealm.genres.map { it.name })
 }
-/*
-fun MovieDetailRealmObject.toDomain() = MovieDetail(
-    id = id,
-    title = title,
-    overview = overview,
-    posterUrl = posterPath?.let { "https://image.tmdb.org/t/p/w500$it" },
-    backdropUrl = backdropPath?.let { "https://image.tmdb.org/t/p/w780$it" },
-    releaseDate = releaseDate,
-    voteAverage = voteAverage,
-    //genres = genres.toList(),
-    //runtime = runtime,
-   // tagline = tagline
-)
-*/
+
 

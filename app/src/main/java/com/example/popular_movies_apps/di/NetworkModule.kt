@@ -1,9 +1,12 @@
 package com.example.popular_movies_apps.di
 
+import android.content.Context
 import com.example.popular_movies_apps.core.network.ApiService
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -35,4 +38,14 @@ object NetworkModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
+/*
+    @Provides
+    @Singleton
+    fun provideFirebaseAnalytics(
+        @ApplicationContext context: Context
+    ): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(context).apply {
+            setAnalyticsCollectionEnabled(true)
+        }
+    }*/
 }

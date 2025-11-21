@@ -5,4 +5,7 @@ interface MovieLocalDataSource {
     fun getAllMovies(): List<MovieRealmObject>
     fun getMovieById(id: Int): MovieRealmObject?
     fun saveMovies(movies: List<MovieRealmObject>)
+    // Detalle
+    fun getMovieDetailById(id: Int): MovieDetailRealmObject?
+    fun saveMovieDetail(detail: MovieDetailRealmObject)
 }

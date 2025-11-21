@@ -14,6 +14,7 @@ interface ApiService {
 
     @GET("movie/{id}")
     suspend fun getMovieDetail(
-        @Path("id") movieId: Int
+        @Path("id") movieId: Int,
+        @Query("api_key") key: String = "622dd8f402097c0db5eb4fb12dbd7513"
     ): MovieDetailDto
 }

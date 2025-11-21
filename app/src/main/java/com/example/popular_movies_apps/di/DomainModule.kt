@@ -1,6 +1,7 @@
 package com.example.popular_movies_apps.di
 
 import com.example.popular_movies_apps.domain.repository.MovieRepository
+import com.example.popular_movies_apps.domain.usecase.GetMovieDetailUseCase
 import com.example.popular_movies_apps.domain.usecase.GetPopularMoviesUseCase
 import dagger.Module
 import dagger.Provides
@@ -15,4 +16,9 @@ object DomainModule {
     fun provideGetPopularMoviesUseCase(
         repository: MovieRepository
     ): GetPopularMoviesUseCase = GetPopularMoviesUseCase(repository)
+
+    @Provides
+    fun provideGetMovieDetailUseCase(
+        repository: MovieRepository
+    ): GetMovieDetailUseCase = GetMovieDetailUseCase(repository)
 }
