@@ -55,6 +55,7 @@ Ver en Firebase Console -> DebugView.
 - Modo dark adaptativo dinámico.
 - Cache de imágenes con Coil + MemoryPolicy.
 - CI (GitHub Actions) con lint + tests.
+- Test Unitarios
 
 ## 13\. Licencia
 MIT (agregar archivo LICENSE).
