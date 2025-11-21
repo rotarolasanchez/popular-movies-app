@@ -13,21 +13,13 @@ private class ApiKeyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
 
-        // Debug
-        android.util.Log.d("API_DEBUG", "TMDB_API_KEY='${BuildConfig.TMDB_API_KEY}'")
-        android.util.Log.d("API_DEBUG", "TMDB_BASE_URL='${BuildConfig.TMDB_BASE_URL}'")
-
-        // Si falta la key abortar rápido
         if (BuildConfig.TMDB_API_KEY.isBlank()) {
-            android.util.Log.e("API_DEBUG", "API key vacía")
             return chain.proceed(original)
         }
 
         val newUrl = original.url.newBuilder()
             .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
             .build()
-
-        android.util.Log.d("API_DEBUG", "URL final=$newUrl")
 
         val newRequest = original.newBuilder()
             .url(newUrl)

@@ -35,7 +35,7 @@ fun MovieDetailRealmObject.toDomain() = MovieDetail(
     backdropUrl = backdropPath?.let { "https://image.tmdb.org/t/p/w780$it" },
     releaseDate = releaseDate,
     voteAverage = voteAverage,
-    genres = emptyList(), // No guardado actualmente
+    genres = emptyList(),
     runtime = runtime,
     tagline = tagline
 )

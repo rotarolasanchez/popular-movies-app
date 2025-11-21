@@ -26,8 +26,6 @@ class MovieDetailRealmObject : RealmObject {
     var runtime: Int? = null
     var tagline: String? = null
 
-    // Lista simple de géneros (string)
-    //var genres: RealmList<String> = RealmList()
 }
 
 

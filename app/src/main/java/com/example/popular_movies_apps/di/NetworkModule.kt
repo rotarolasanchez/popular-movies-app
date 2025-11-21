@@ -20,13 +20,11 @@ private class ApiKeyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val original = chain.request()
         if (BuildConfig.TMDB_API_KEY.isBlank()) {
-            android.util.Log.e("API_DEBUG", "API key vacía")
             return chain.proceed(original)
         }
         val newUrl = original.url.newBuilder()
             .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
             .build()
-        android.util.Log.d("API_DEBUG", "URL final=$newUrl")
         val newRequest = original.newBuilder().url(newUrl).build()
         return chain.proceed(newRequest)
     }

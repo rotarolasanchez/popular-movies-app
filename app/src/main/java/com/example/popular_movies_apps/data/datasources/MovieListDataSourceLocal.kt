@@ -29,7 +29,6 @@ class MovieListDataSourceLocal @Inject constructor() : MovieLocalDataSource {
 
     override fun saveMovies(movies: List<MovieRealmObject>) {
         realm.writeBlocking {
-            // Limpiar datos previos y guardar nuevos
             delete(query<MovieRealmObject>())
             movies.forEach { movie ->
                 copyToRealm(movie)

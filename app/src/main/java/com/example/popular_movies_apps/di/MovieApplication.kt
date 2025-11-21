@@ -10,10 +10,9 @@ import dagger.hilt.android.HiltAndroidApp
 class MoviesApplication : Application(){
     override fun onCreate() {
         super.onCreate()
-        // Inicializar Firebase explícitamente
+
         FirebaseApp.initializeApp(this)
 
-        // Habilitar Analytics
         FirebaseAnalytics.getInstance(this).apply {
             setAnalyticsCollectionEnabled(true)
         }
