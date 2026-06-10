@@ -1,6 +1,6 @@
-package com.example.popular_movies_app.domain.usecase
+package com.example.popular_movies_apps.domain.usecase
 
-import com.example.popular_movies_app.domain.repository.MovieRepository
+import com.example.popular_movies_apps.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class GetPopularMoviesUseCase @Inject constructor(

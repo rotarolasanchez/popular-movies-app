@@ -1,22 +1,22 @@
-package com.example.popular_movies_app.presentation.viewmodels
+package com.example.popular_movies_apps.presentation.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.popular_movies_app.domain.usecase.GetPopularMoviesUseCase
-import com.example.popular_movies_app.presentation.state.MovieListUiState.MoviesListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.popular_movies_apps.domain.usecase.GetPopularMoviesUseCase
+import com.example.popular_movies_apps.presentation.state.MovieListUiState.MovieListUiState
 
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(MoviesListUiState())
+    var uiState by mutableStateOf(MovieListUiState.MoviesListUiState())
         private set
 
     init {
@@ -37,5 +37,4 @@ class MoviesListViewModel @Inject constructor(
             )
         }
     }
-
 }

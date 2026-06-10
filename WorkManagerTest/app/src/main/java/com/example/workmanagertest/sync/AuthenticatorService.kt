@@ -38,71 +38,87 @@ class AuthenticatorService : Service() {
 class Authenticator(val context: Context) : AbstractAccountAuthenticator(context) {
 
     override fun editProperties(
-        response: AccountAuthenticatorResponse,
-        accountType: String
-    ) {
+        response: AccountAuthenticatorResponse?,
+        accountType: String?
+    ): Bundle {
         Log.d(TAG, "editProperties called")
-        response.onError(android.accounts.AccountManager.KEY_ERROR_CODE, "Not supported")
+        return Bundle().apply {
+            putInt(android.accounts.AccountManager.KEY_ERROR_CODE, 1)
+            putString(android.accounts.AccountManager.KEY_ERROR_MESSAGE, "Not supported")
+        }
     }
 
     override fun addAccount(
-        response: AccountAuthenticatorResponse,
-        accountType: String,
+        response: AccountAuthenticatorResponse?,
+        accountType: String?,
         authTokenType: String?,
         requiredFeatures: Array<String>?,
         options: Bundle?
-    ) {
+    ): Bundle {
         Log.d(TAG, "addAccount called")
-        response.onError(android.accounts.AccountManager.KEY_ERROR_CODE, "Not supported")
+        return Bundle().apply {
+            putInt(android.accounts.AccountManager.KEY_ERROR_CODE, 1)
+            putString(android.accounts.AccountManager.KEY_ERROR_MESSAGE, "Not supported")
+        }
     }
 
     override fun getAuthToken(
-        response: AccountAuthenticatorResponse,
-        account: Account,
-        authTokenType: String,
+        response: AccountAuthenticatorResponse?,
+        account: Account?,
+        authTokenType: String?,
         options: Bundle?
-    ) {
+    ): Bundle {
         Log.d(TAG, "getAuthToken called")
-        response.onError(android.accounts.AccountManager.KEY_ERROR_CODE, "Not supported")
+        return Bundle().apply {
+            putInt(android.accounts.AccountManager.KEY_ERROR_CODE, 1)
+            putString(android.accounts.AccountManager.KEY_ERROR_MESSAGE, "Not supported")
+        }
     }
 
-    override fun getAuthTokenLabel(authTokenType: String): String {
+    override fun getAuthTokenLabel(authTokenType: String?): String {
         Log.d(TAG, "getAuthTokenLabel called")
         return "Token"
     }
 
     override fun updateCredentials(
-        response: AccountAuthenticatorResponse,
-        account: Account,
+        response: AccountAuthenticatorResponse?,
+        account: Account?,
         authTokenType: String?,
         options: Bundle?
-    ) {
+    ): Bundle {
         Log.d(TAG, "updateCredentials called")
-        response.onError(android.accounts.AccountManager.KEY_ERROR_CODE, "Not supported")
+        return Bundle().apply {
+            putInt(android.accounts.AccountManager.KEY_ERROR_CODE, 1)
+            putString(android.accounts.AccountManager.KEY_ERROR_MESSAGE, "Not supported")
+        }
     }
 
     override fun hasFeatures(
-        response: AccountAuthenticatorResponse,
-        account: Account,
-        features: Array<String>
-    ) {
+        response: AccountAuthenticatorResponse?,
+        account: Account?,
+        features: Array<String>?
+    ): Bundle {
         Log.d(TAG, "hasFeatures called")
-        response.onResult(Bundle().apply {
+        return Bundle().apply {
             putBoolean(android.accounts.AccountManager.KEY_BOOLEAN_RESULT, false)
-        })
+        }
     }
 
     override fun confirmCredentials(
-        response: AccountAuthenticatorResponse,
-        account: Account,
+        response: AccountAuthenticatorResponse?,
+        account: Account?,
         options: Bundle?
-    ) {
+    ): Bundle {
         Log.d(TAG, "confirmCredentials called")
-        response.onError(android.accounts.AccountManager.KEY_ERROR_CODE, "Not supported")
+        return Bundle().apply {
+            putInt(android.accounts.AccountManager.KEY_ERROR_CODE, 1)
+            putString(android.accounts.AccountManager.KEY_ERROR_MESSAGE, "Not supported")
+        }
     }
 
     companion object {
         private const val TAG = "Authenticator"
     }
 }
+
 

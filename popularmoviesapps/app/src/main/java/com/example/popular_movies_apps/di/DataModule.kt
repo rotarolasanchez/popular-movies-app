@@ -1,9 +1,10 @@
-package com.example.popular_movies_app.di
+package com.example.popular_movies_apps.di
 
-import com.example.popular_movies_app.data.datasources.MovieListDataSourceLocal
-import com.example.popular_movies_app.data.local.MovieEntity.MovieLocalDataSource
-import com.example.popular_movies_app.data.repository.MovieRepositoryImpl
-import com.example.popular_movies_app.domain.repository.MovieRepository
+
+import com.example.popular_movies_apps.data.datasources.MovieListDataSourceLocal
+import com.example.popular_movies_apps.data.local.MovieEntity.MovieLocalDataSource
+import com.example.popular_movies_apps.data.repository.MovieRepositoryImpl
+import com.example.popular_movies_apps.domain.repository.MovieRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,6 +24,6 @@ abstract class DataModule {
     @Binds
     @Singleton
     abstract fun bindMovieLocalDataSource(
-        movieListDataSourceLocal: MovieListDataSourceLocal
+        impl: MovieListDataSourceLocal
     ): MovieLocalDataSource
 }

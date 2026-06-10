@@ -13,6 +13,16 @@ class RecommendBottomSheet : BottomSheetDialogFragment() {
     private var _binding: BottomSheetRecommendBinding? = null
     private val binding get() = _binding!!
 
+    companion object {
+        fun newInstance(movieTitle: String): RecommendBottomSheet {
+            val args = Bundle()
+            args.putString("title", movieTitle)
+            val fragment = RecommendBottomSheet()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,8 +35,14 @@ class RecommendBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        binding.tvMovieTitle.text = arguments?.getString("title")
+
         binding.btnConfirm.setOnClickListener {
             val comment = binding.etComment.text.toString()
+            if (comment.isBlank()) {
+                binding.etComment.error = "Por favor deja un comentario"
+                return@setOnClickListener
+            }
             Toast.makeText(context, "Recomendación enviada: $comment", Toast.LENGTH_SHORT).show()
             dismiss()
         }

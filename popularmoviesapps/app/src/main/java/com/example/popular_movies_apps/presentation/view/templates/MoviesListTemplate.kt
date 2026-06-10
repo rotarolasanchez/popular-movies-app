@@ -1,4 +1,4 @@
-package com.example.popular_movies_app.presentation.view.templates
+package com.example.popular_movies_apps.presentation.view.templates
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,11 +19,13 @@ fun MoviesListTemplate(
     content: @Composable () -> Unit
 ) {
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text(title) },
+                title = { Text(title, color = MaterialTheme.colorScheme.onPrimaryContainer) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             )
         }

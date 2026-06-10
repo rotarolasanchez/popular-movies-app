@@ -1,10 +1,12 @@
 package com.example.imdumb.presentation.main
 
+import com.example.imdumb.domain.model.Category
+
 interface MainContract {
     interface View {
         fun showLoading()
         fun hideLoading()
-        fun showMovies(categories: List<Any>) // Replace Any with Domain model
+        fun showMovies(categories: List<Category>)
         fun showError(message: String)
     }
 

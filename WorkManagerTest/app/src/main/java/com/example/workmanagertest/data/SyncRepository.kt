@@ -2,6 +2,8 @@ package com.example.workmanagertest.data
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -9,8 +11,9 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.workmanagertest.sync.SyncWorker
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.callbackFlow
 import java.util.concurrent.TimeUnit
 
 class SyncRepository(private val context: Context) {
@@ -59,20 +62,25 @@ class SyncRepository(private val context: Context) {
     /**
      * Obtiene el estado del trabajo de sincronización como Flow
      */
-    fun getSyncWorkStatus(): Flow<WorkStatus> {
-        return workManager.getWorkInfosForUniqueWorkFlow(SyncWorker.WORK_NAME)
-            .map { workInfoList ->
-                when {
-                    workInfoList.isEmpty() -> WorkStatus.NotScheduled
-                    workInfoList[0].state == WorkInfo.State.ENQUEUED -> WorkStatus.Queued
-                    workInfoList[0].state == WorkInfo.State.RUNNING -> WorkStatus.Running
-                    workInfoList[0].state == WorkInfo.State.SUCCEEDED -> WorkStatus.Success
-                    workInfoList[0].state == WorkInfo.State.FAILED -> WorkStatus.Failed
-                    workInfoList[0].state == WorkInfo.State.BLOCKED -> WorkStatus.Blocked
-                    workInfoList[0].state == WorkInfo.State.CANCELLED -> WorkStatus.Cancelled
-                    else -> WorkStatus.Unknown
-                }
+    fun getSyncWorkStatus(): Flow<WorkStatus> = callbackFlow {
+        val liveData: LiveData<List<WorkInfo>> = workManager.getWorkInfosForUniqueWorkLiveData(SyncWorker.WORK_NAME)
+        val observer = Observer<List<WorkInfo>> { workInfoList ->
+            val status = when {
+                workInfoList.isEmpty() -> WorkStatus.NotScheduled
+                workInfoList[0].state == WorkInfo.State.ENQUEUED -> WorkStatus.Queued
+                workInfoList[0].state == WorkInfo.State.RUNNING -> WorkStatus.Running
+                workInfoList[0].state == WorkInfo.State.SUCCEEDED -> WorkStatus.Success
+                workInfoList[0].state == WorkInfo.State.FAILED -> WorkStatus.Failed
+                workInfoList[0].state == WorkInfo.State.BLOCKED -> WorkStatus.Blocked
+                workInfoList[0].state == WorkInfo.State.CANCELLED -> WorkStatus.Cancelled
+                else -> WorkStatus.Unknown
             }
+            trySend(status).isSuccess
+        }
+        liveData.observeForever(observer)
+        awaitClose {
+            liveData.removeObserver(observer)
+        }
     }
 
     /**
@@ -123,4 +131,12 @@ sealed class WorkStatus {
 
     fun isRunning(): Boolean = this is Running || this is Queued
 }
+
+
+
+
+
+
+
+
 

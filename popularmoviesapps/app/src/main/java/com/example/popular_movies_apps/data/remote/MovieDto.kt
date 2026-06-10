@@ -1,4 +1,4 @@
-package com.example.popular_movies_app.data.remote
+package com.example.popular_movies_apps.data.remote
 
 import com.google.gson.annotations.SerializedName
 

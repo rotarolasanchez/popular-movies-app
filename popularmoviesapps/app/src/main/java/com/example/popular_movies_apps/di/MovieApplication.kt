@@ -1,8 +1,21 @@
-package com.example.popular_movies_app.di
+package com.example.popular_movies_apps.di
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.HiltAndroidApp
 
 
 @HiltAndroidApp
-class MoviesApplication : Application()
+class MoviesApplication : Application(){
+    override fun onCreate() {
+        super.onCreate()
+        // Inicializar Firebase explícitamente
+        FirebaseApp.initializeApp(this)
+
+        // Habilitar Analytics
+        FirebaseAnalytics.getInstance(this).apply {
+            setAnalyticsCollectionEnabled(true)
+        }
+    }
+}

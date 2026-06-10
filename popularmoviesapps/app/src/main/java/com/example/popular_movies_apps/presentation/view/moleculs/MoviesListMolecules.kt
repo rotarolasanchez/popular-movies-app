@@ -1,4 +1,4 @@
-package com.example.popular_movies_app.presentation.view.moleculs
+package com.example.popular_movies_apps.presentation.view.moleculs
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.popular_movies_app.domain.model.MovieModel
+import com.example.popular_movies_apps.domain.model.MovieModel
 
 
 @Composable
@@ -32,7 +32,11 @@ fun MovieCard(
             .fillMaxWidth()
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     ) {
         Column {
             AsyncImage(
@@ -55,7 +59,7 @@ fun MovieCard(
                 Text(
                     text = "⭐ ${movie.voteAverage}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         }

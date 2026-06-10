@@ -7,21 +7,28 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.workmanagertest.data.SyncRepository
+import com.example.workmanagertest.ui.SyncScreen
 import com.example.workmanagertest.ui.theme.WorkManagerTestTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Inicializar repositorio de sincronización
+        val syncRepository = SyncRepository.getInstance(this)
+        // Programar sincronización periódica al iniciar la app
+        syncRepository.schedulePeriodicSync()
+
         setContent {
             WorkManagerTestTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    SyncScreen(
+                        syncRepository = syncRepository,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -30,18 +37,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     WorkManagerTestTheme {
-        Greeting("Android")
+        // Preview dummy
     }
 }

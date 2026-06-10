@@ -1,4 +1,4 @@
-package com.example.popular_movies_app.domain.model
+package com.example.popular_movies_apps.domain.model
 
 
 data class MovieModel(

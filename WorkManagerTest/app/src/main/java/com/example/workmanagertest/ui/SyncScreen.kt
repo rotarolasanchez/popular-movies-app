@@ -23,11 +23,11 @@ import com.example.workmanagertest.data.SyncRepository
 import com.example.workmanagertest.data.WorkStatus
 
 @Composable
-fun SyncScreen(syncRepository: SyncRepository) {
+fun SyncScreen(syncRepository: SyncRepository, modifier: Modifier = Modifier) {
     val syncStatus by syncRepository.getSyncWorkStatus().collectAsState(WorkStatus.NotScheduled)
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -151,4 +151,5 @@ fun SyncScreen(syncRepository: SyncRepository) {
         )
     }
 }
+
 

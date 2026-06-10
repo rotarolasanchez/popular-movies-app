@@ -1,4 +1,4 @@
-package com.example.popular_movies_app.presentation.view.organisms
+package com.example.popular_movies_apps.presentation.view.organisms
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,8 +9,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.popular_movies_app.domain.model.MovieModel
-import com.example.popular_movies_app.presentation.view.moleculs.MovieCard
+import com.example.popular_movies_apps.domain.model.MovieModel
+import com.example.popular_movies_apps.presentation.view.moleculs.MovieCard
 
 @Composable
 fun MoviesGrid(

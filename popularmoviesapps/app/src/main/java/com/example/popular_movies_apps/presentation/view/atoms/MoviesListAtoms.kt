@@ -1,4 +1,4 @@
-package com.example.popular_movies_app.presentation.view.atoms
+package com.example.popular_movies_apps.presentation.view.atoms
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
