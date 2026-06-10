@@ -1,19 +1,24 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget  // ← Cambiado
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt.android)
+    id("io.realm.kotlin") version libs.versions.realm.get()
+    kotlin("kapt")
 }
 
 android {
     namespace = "com.example.popular_movies_app"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.popular_movies_app"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -37,9 +42,11 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
+
 
 dependencies {
     implementation(libs.androidx.core.ktx)
@@ -57,4 +64,20 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.com.squareup.retrofit2)
+    implementation(libs.retrofit.converter.gson)
+    // Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
+    //Realm
+    implementation(libs.realm.base)
+    //implementation("io.realm.kotlin:library-base:1.11.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
+    implementation(libs.javapoet)
+    kapt(libs.javapoet)
+
 }
+
+
