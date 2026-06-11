@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -13,12 +11,6 @@ android {
     namespace = "com.example.imdumb"
     compileSdk = 35
 
-    val localProperties = Properties()
-    val localPropertiesFile = rootProject.file("local.properties")
-    if (localPropertiesFile.exists()) {
-        localProperties.load(localPropertiesFile.inputStream())
-    }
-
     defaultConfig {
         applicationId = "com.example.imdumb"
         minSdk = 24
@@ -28,7 +20,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val tmdbApiKey = localProperties.getProperty("TMDB_API_KEY") ?: ""
+        val tmdbApiKey = project.findProperty("TMDB_API_KEY") as? String ?: ""
         buildConfigField("String", "TMDB_API_KEY", "\"$tmdbApiKey\"")
     }
 
@@ -36,16 +28,15 @@ android {
     productFlavors {
         create("dev") {
             dimension = "environment"
-            // Se comenta el suffix para que coincida con el paquete en google-services.json
             applicationIdSuffix = ".dev"
-            val baseUrl = localProperties.getProperty("BASE_URL_DEV") ?: "https://api.themoviedb.org/3/"
+            val baseUrl = project.findProperty("BASE_URL_DEV") as? String ?: "https://api.themoviedb.org/3/"
             buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
             manifestPlaceholders["appName"] = "Imdumb Dev"
         }
         create("prod") {
             dimension = "environment"
             applicationIdSuffix = ""
-            val baseUrl = localProperties.getProperty("BASE_URL_PROD") ?: "https://api.themoviedb.org/3/"
+            val baseUrl = project.findProperty("BASE_URL_PROD") as? String ?: "https://api.themoviedb.org/3/"
             buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
             manifestPlaceholders["appName"] = "Imdumb"
         }
