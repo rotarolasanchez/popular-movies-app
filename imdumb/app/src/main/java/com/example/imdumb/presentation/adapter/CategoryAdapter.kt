@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imdumb.databinding.ItemCategoryBinding
-import com.example.imdumb.domain.model.Category
+import com.example.imdumb.domain.model.CategoryModel
 import com.example.imdumb.domain.model.MovieModel
 
 class CategoryAdapter(
-    private val categories: List<Category>,
+    private val categories: List<CategoryModel>,
     private val onMovieClick: (MovieModel) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 

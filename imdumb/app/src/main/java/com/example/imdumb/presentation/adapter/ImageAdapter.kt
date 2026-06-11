@@ -20,6 +20,7 @@ class ImageAdapter(private val images: List<String>) : RecyclerView.Adapter<Imag
             .load(images[position])
             .centerCrop()
             .into(holder.binding.imageView)
+
     }
 
     override fun getItemCount() = images.size

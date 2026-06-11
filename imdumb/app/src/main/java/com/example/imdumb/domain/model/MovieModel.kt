@@ -9,6 +9,8 @@ data class MovieModel(
     val title: String,
     val overview: String,
     val posterPath: String?,
+    val backdropPath: String?,
     val releaseDate: String?,
-    val voteAverage: Double
+    val voteAverage: Double,
+    var actors: List<ActorModel> = emptyList()
 ) : Parcelable

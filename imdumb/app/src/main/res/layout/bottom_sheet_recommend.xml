@@ -15,11 +15,22 @@
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary" />
 
+    <TextView
+        android:id="@+id/tvMovieSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:maxLines="5"
+        android:ellipsize="end"
+        android:textColor="?android:attr/textColorSecondary" />
+
     <EditText
         android:id="@+id/etComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Deja un comentario"
+        android:inputType="textMultiLine"
         android:textColor="?android:attr/textColorPrimary"
         android:textColorHint="?android:attr/textColorSecondary" />
 

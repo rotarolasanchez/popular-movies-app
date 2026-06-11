@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imdumb.data.local.LocalConfig
 import com.example.imdumb.databinding.ActivityMainBinding
-import com.example.imdumb.domain.model.Category
+import com.example.imdumb.domain.model.CategoryModel
 import com.example.imdumb.presentation.adapter.CategoryAdapter
 import com.example.imdumb.presentation.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.progressBar.visibility = View.GONE
     }
 
-    override fun showMovies(categories: List<Category>) {
+    override fun showMovies(categories: List<CategoryModel>) {
         binding.rvCategories.adapter = CategoryAdapter(categories) { movie ->
             val intent = Intent(this, DetailActivity::class.java).apply {
                 putExtra("movie", movie)

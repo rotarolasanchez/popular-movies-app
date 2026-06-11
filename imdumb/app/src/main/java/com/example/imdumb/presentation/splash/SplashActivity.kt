@@ -29,29 +29,32 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Mostrar el texto guardado localmente de inmediato mientras se descarga el nuevo
+        binding.tvWelcome.text = localConfig.getConfig("welcome_text") ?: "Cargando..."
+        
         fetchRemoteConfig()
     }
 
     private fun fetchRemoteConfig() {
+        // Obligar a que la descarga ocurra ahora
         remoteConfig.fetchAndActivate()
             .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val welcomeText = remoteConfig.getString("welcome_text")
-                    val homeTitle = remoteConfig.getString("home_title")
-                    val enableRecommendation = remoteConfig.getBoolean("enable_recommendation")
-                    val appTheme = remoteConfig.getString("app_theme")
+                val welcomeText = remoteConfig.getString("welcome_text")
+                val homeTitle = remoteConfig.getString("home_title")
+                val enableRecommendation = remoteConfig.getBoolean("enable_recommendation")
+                val appTheme = remoteConfig.getString("app_theme")
 
-                    // Save to local config as requested in the requirements
-                    localConfig.saveConfig("welcome_text", welcomeText)
-                    localConfig.saveConfig("home_title", homeTitle)
-                    localConfig.saveBoolean("enable_recommendation", enableRecommendation)
-                    localConfig.saveConfig("app_theme", appTheme)
+                // Guardar en persistencia local para cumplir el requerimiento de "guarde y cargue"
+                localConfig.saveConfig("welcome_text", welcomeText)
+                localConfig.saveConfig("home_title", homeTitle)
+                localConfig.saveBoolean("enable_recommendation", enableRecommendation)
+                localConfig.saveConfig("app_theme", appTheme)
 
-                    applyTheme(appTheme)
-                    binding.tvWelcome.text = welcomeText
-                }
+                // Aplicar cambios en UI de inmediato
+                applyTheme(appTheme)
+                binding.tvWelcome.text = welcomeText
                 
-                // Small delay to show the welcome text
+                // Pequeño delay para que el usuario vea el mensaje de bienvenida actualizado
                 binding.root.postDelayed({
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()

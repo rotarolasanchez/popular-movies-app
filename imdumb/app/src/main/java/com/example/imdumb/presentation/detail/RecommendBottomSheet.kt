@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.imdumb.databinding.BottomSheetRecommendBinding
+import com.example.imdumb.domain.model.MovieModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class RecommendBottomSheet : BottomSheetDialogFragment() {
@@ -14,9 +15,9 @@ class RecommendBottomSheet : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(movieTitle: String): RecommendBottomSheet {
+        fun newInstance(movie: MovieModel): RecommendBottomSheet {
             val args = Bundle()
-            args.putString("title", movieTitle)
+            args.putParcelable("movie", movie)
             val fragment = RecommendBottomSheet()
             fragment.arguments = args
             return fragment
@@ -35,7 +36,9 @@ class RecommendBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        binding.tvMovieTitle.text = arguments?.getString("title")
+        val movie = arguments?.getParcelable<MovieModel>("movie")
+        binding.tvMovieTitle.text = movie?.title
+        binding.tvMovieSummary.text = movie?.overview
 
         binding.btnConfirm.setOnClickListener {
             val comment = binding.etComment.text.toString()
@@ -43,7 +46,7 @@ class RecommendBottomSheet : BottomSheetDialogFragment() {
                 binding.etComment.error = "Por favor deja un comentario"
                 return@setOnClickListener
             }
-            Toast.makeText(context, "Recomendación enviada: $comment", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Recomendación enviada para: ${movie?.title}", Toast.LENGTH_SHORT).show()
             dismiss()
         }
     }
